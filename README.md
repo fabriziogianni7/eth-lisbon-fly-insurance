@@ -1,7 +1,7 @@
 # eth-lisbon-fly-insurance
 Simple PoC of a decentralized flight insurance protocol - ETH Lisbon
 The protocol aims to provide insurance prices for flight delays.
-The project would be deployed on cronos blockchain
+The project would be deployed on **cronos blockchain**
 
 ## Flow
 An oracle would fetch data from a flight API
