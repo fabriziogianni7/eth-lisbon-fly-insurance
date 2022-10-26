@@ -22,6 +22,13 @@ it holds a mapping <Flyer,Ticket>
 it has a function **checkFlights** that checks if the flights are delayed or not
 in case some premium is to be paid, this contract invoke a function in the Vault 
 
+to prevent the vault to go bankruptcy, the broker contract checks
+TVL >= 2xTP
+
+where 
+TVL = totalValueLocked
+TP = Total Premium to be eventually paid
+
 ## UI
 Allows user to buy the insurance or deposit into the vault
 In the scope of the POC it invokes the oracle every xx hrs to see if some price need to be paid
