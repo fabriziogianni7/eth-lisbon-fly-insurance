@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "./FlightPolicy.sol";
 import "./Policy.sol";
 
-// create your contract and inherit the your imports
+// TODO review accessors kwds
 contract Broker is ERC20 {
 
     event Deposit(address caller, uint256 amt);
@@ -64,20 +64,18 @@ contract Broker is ERC20 {
         return value;
     }
 
-    // TODO should pay the refund to the subscriber 
-    // the recepitNFT should be passed here
-    function refundSubscriber(FlightPolicy _FlightPolicy) public {
-        // _FlightPolicy.subscriberToPolicies
-
+    // the subscriber passes here his NFT
+    function refundSubscriber(address _repepitNFTAddress) public {
+        RecepitNFT nft = RecepitNFT(_repepitNFTAddress);
+        asset.transferFrom(address(this), nft.subscriber, nft.policy.refund);
+        totalRefundValue-=nft.policy.refund;
     }
 
     function managePolicies(Policy memory _policy, address _subscriber) public {
         require(totalamount() > 0, "TVL is 0!");
         require(totalamount() > totalRefundValue, "TVL is less than TVR!");
 
-        //check if the policy is present
-            // if it is, add subscriber
-            // if it isn't create a new one
+        //add suscriber to existing policy or create a new one
         if(flightnToPolicyContract[_policy.flightn] > 0){
             FlightPolicy(flightnToPolicyContract[_policy.flightn]).addSubscriber(_subscriber);
         }else{
