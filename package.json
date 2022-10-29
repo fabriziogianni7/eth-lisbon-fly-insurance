@@ -1,0 +1,23 @@
+{
+  "name": "eth-lisbon-fly-insurance",
+  "version": "1.0.0",
+  "description": "Simple PoC of a decentralized flight insurance protocol - ETH Lisbon The protocol aims to provide insurance prices for flight delays. The project would be deployed on **cronos blockchain**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fabriziogianni7/eth-lisbon-fly-insurance.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fabriziogianni7/eth-lisbon-fly-insurance/issues"
+  },
+  "homepage": "https://github.com/fabriziogianni7/eth-lisbon-fly-insurance#readme",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^2.0.0",
+    "hardhat": "^2.12.1"
+  }
+}
