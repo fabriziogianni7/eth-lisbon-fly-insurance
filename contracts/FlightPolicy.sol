@@ -2,6 +2,7 @@
 pragma solidity ^0.8.0;
 
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+// import "@openzeppelin/contracts/interfaces/IERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "./FlightPolicyInterface.sol";
 import "./Policy.sol";
@@ -40,5 +41,9 @@ contract FlightPolicy is ERC721 , FlightPolicyInterface{
             return true;
         }
         return false;
+    }
+
+    function getPolicy() public returns(Policy memory) {
+        return policy;
     }
 }

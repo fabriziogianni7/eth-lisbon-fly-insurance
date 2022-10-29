@@ -66,17 +66,22 @@ contract Broker is ERC20 {
 
     // the subscriber passes here his NFT
     function refundSubscriber(address _repepitNFTAddress) public {
+        //check the oracle to see if the flight is deleyed
         RecepitNFT nft = RecepitNFT(_repepitNFTAddress);
-        asset.transferFrom(address(this), nft.subscriber, nft.policy.refund);
-        totalRefundValue-=nft.policy.refund;
+        Policy memory pol = nft.getPolicy();
+        address sub = nft.getSubscriber();
+        asset.transferFrom(address(this), sub, pol.refund);
+        totalRefundValue-=pol.refund;
     }
 
     //add suscriber to existing policy or create a new one
     function managePolicies(Policy memory _policy, address _subscriber) public {
         require(totalamount() > 0, "TVL is 0!");
         require(totalamount() > totalRefundValue, "TVL is less than TVR!");
+        FlightPolicy fp = FlightPolicy(flightnToPolicyContract[_policy.flightn]);
+        Policy memory p = fp.getPolicy();
 
-        if(flightnToPolicyContract[_policy.flightn] > 0){
+        if(flightnToPolicyContract[_policy.flightn] == address(0)){
             FlightPolicy(flightnToPolicyContract[_policy.flightn]).addSubscriber(_subscriber);
         }else{
             _createPolicy(_policy,_subscriber);
@@ -85,7 +90,7 @@ contract Broker is ERC20 {
     }
 
     function _createPolicy(Policy memory _policy, address _subscriber) internal {
-        FlightPolicy newPolicy = new FlightPolicy(_policy, asset, _subscriber);
+        FlightPolicy newPolicy = new FlightPolicy(_policy, asset, _subscriber, address(this));
         flightnToPolicyContract[_policy.flightn] = address(newPolicy);
         newPolicy.addSubscriber(_subscriber);
     }

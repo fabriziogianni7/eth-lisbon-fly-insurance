@@ -11,8 +11,6 @@ interface RecepitNFTInterface {
 
     event Refunded(string flightn, uint256 amount);
 
-
- 
     function claimRefund() external;
 
 }

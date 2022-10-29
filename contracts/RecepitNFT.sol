@@ -11,7 +11,6 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract RecepitNFT is ERC721, RecepitNFTInterface, Ownable {
 
-    event Refunded(string flightn, uint256 amount);
 
     Policy public policy;
     address public brokerAddress;
@@ -27,6 +26,14 @@ contract RecepitNFT is ERC721, RecepitNFTInterface, Ownable {
     function claimRefund() public onlyOwner {
         Broker(brokerAddress).refundSubscriber(address(this));
         emit Refunded(policy.flightn, policy.refund);
+    }
+
+    function getPolicy() public returns(Policy memory) {
+        return policy;
+    }
+
+    function getSubscriber() public returns(address) {
+        return subscriber;
     }
 
 }
