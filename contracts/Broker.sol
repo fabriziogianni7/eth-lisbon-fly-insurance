@@ -71,17 +71,16 @@ contract Broker is ERC20 {
         totalRefundValue-=nft.policy.refund;
     }
 
+    //add suscriber to existing policy or create a new one
     function managePolicies(Policy memory _policy, address _subscriber) public {
         require(totalamount() > 0, "TVL is 0!");
         require(totalamount() > totalRefundValue, "TVL is less than TVR!");
 
-        //add suscriber to existing policy or create a new one
         if(flightnToPolicyContract[_policy.flightn] > 0){
             FlightPolicy(flightnToPolicyContract[_policy.flightn]).addSubscriber(_subscriber);
         }else{
             _createPolicy(_policy,_subscriber);
         }
-        // increment tot refund 
         totalRefundValue +=  _policy.refund;
     }
 

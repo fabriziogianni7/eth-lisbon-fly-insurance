@@ -12,13 +12,11 @@ contract RecepitNFT is ERC721, RecepitNFTInterface {
     event Refunded(string flightn, uint256 amount);
 
     Policy public policy;
-    ERC20 public asset;
     address public brokerAddress;
     address public subscriber;
 
     constructor(Policy memory _policy, ERC20 _asset, address _subscriber, address _brokerAddress) ERC721("Policy Recepit NFT", "PRN") {
         policy = _policy;
-        asset = _asset;
         brokerAddress = _brokerAddress;
         subscriber = _subscriber;
         _mint(_subscriber, _owners++);
