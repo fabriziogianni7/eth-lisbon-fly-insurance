@@ -1,40 +1,72 @@
-# eth-lisbon-fly-insurance
-Simple PoC of a decentralized flight insurance protocol - ETH Lisbon
-The protocol aims to provide insurance prices for flight delays.
-The project would be deployed on **cronos blockchain**
+# dApp Starter Boilerplate
 
-## Flow
-An oracle would fetch data from a flight API
-A smart contract would manage the logic for the refound: if fly is delayed --> pay off a % of ticket price
-A vault will automatically pay who bought the insurance
+A dApp starter kit template to quick start a dapp project with Next.js + Tailwind CSS + Ethers + wagmi + RainbowKit.
 
+Other tools/components included: Headless UI, Heroicons, Autoprefixer, Sass, PostCSS, ESLint, Prettier.
 
-## Flyers
-flyers would buy the premium and get the inscurance money if the flight is delayed
+Live preview for this repo: https://dapp-starter.aris.ac
 
-## Vault
-Liquidity Providers would put Stablecoins in the Vault and earn interests
-it pays the premium to flyers
+## Getting Started
 
-## Broker Smart Contract
-This contract manages the logic behind the application.
-it holds a mapping <Flyer,Ticket>
-it has a function **checkFlights** that checks if the flights are delayed or not
-in case some premium is to be paid, this contract invoke a function in the Vault 
+```bash
+# Install Dependencies
+yarn
 
-to prevent the vault to go bankruptcy, the broker contract checks
-TVL >= 2xTP
+# Run the development server
+yarn dev
+```
 
-where 
-TVL = totalValueLocked
-TP = Total Premium to be eventually paid
+### ENV
 
-## UI
-Allows user to buy the insurance or deposit into the vault
-In the scope of the POC it invokes the oracle every xx hrs to see if some price need to be paid
+```bash
+# Copy ENV File
+cp .env.example .env.local
+```
 
-## P1
-Tokens in the vault can be used for farming/yeld bearing mechanisms
+### Configs
 
+- `src/appConfig.ts`: app name, title, SEO etc.
+- `src/pages/_app.tsx`: chains, providers, wallet connectors
 
+### Scripts
 
+**Next.js**
+
+```bash
+# Build
+yarn build
+
+# Start server with build files
+yarn start
+```
+
+**Prettier**
+
+```bash
+# Use Prettier to do Format Check for files under ./src
+yarn fc
+
+# Use Prettier to do Format Fix for files under ./src
+yarn ff
+```
+
+### Deployment
+
+The easiest way to deploy your Next.js app is to use [Vercel](https://vercel.com/), by the creators of Next.js.
+
+Check out the [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+
+## More
+
+Learn about components of this kit is using:
+
+- [Next.js](https://nextjs.org/) - React Framework by Vercel
+- [Tailwind CSS](https://tailwindcss.com/) - Utility-first CSS Framework
+- [Ethers.js](https://github.com/ethers-io/ethers.js/) - Compact library for interacting with Ethereum.
+- [wagmi](https://wagmi.sh/) - React Hooks for Ethereum
+- [RainbowKit](https://rainbowkit.com/) - React library for wallet connections with dApp.
+- [Headless UI](https://headlessui.dev/) - Unstyled, fully accessible UI components
+
+## License
+
+This app is open-source and licensed under the MIT license. For more details, check the [License file](LICENSE).

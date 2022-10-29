@@ -24,7 +24,6 @@
   "dependencies": {
     "@headlessui/react": "^1.7.3",
     "@heroicons/react": "^2.0.12",
-    "@openzeppelin/contracts": "^4.7.3",
     "@popperjs/core": "^2.11.6",
     "@rainbow-me/rainbowkit": "^0.7.1",
     "@tailwindcss/typography": "^0.5.7",
