@@ -9,7 +9,7 @@ import "./Policy.sol";
 import "./RecepitNFT.sol";
 import "./RecepitNFTInterface.sol";
 
-contract FlightPolicy is ERC721 , FlightPolicyInterface{
+contract FlightPolicy is ERC721{
 
     event NewSubscriber(address);
     
@@ -18,7 +18,7 @@ contract FlightPolicy is ERC721 , FlightPolicyInterface{
     address public brokerAddress;
     uint256 totalRecepits;
 
-    constructor(Policy memory _policy, ERC20 _asset, address _firstSubscriber, address _brokerAddress) {
+    constructor(Policy memory _policy, ERC20 _asset, address _brokerAddress) ERC721("Flight Policy", "FP") {
         policy = _policy;
         asset = ERC20(_asset);
         brokerAddress = _brokerAddress;
@@ -43,7 +43,7 @@ contract FlightPolicy is ERC721 , FlightPolicyInterface{
         return false;
     }
 
-    function getPolicy() public returns(Policy memory) {
+    function getPolicy() public view returns(Policy memory) {
         return policy;
     }
 }

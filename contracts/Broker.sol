@@ -78,8 +78,6 @@ contract Broker is ERC20 {
     function managePolicies(Policy memory _policy, address _subscriber) public {
         require(totalamount() > 0, "TVL is 0!");
         require(totalamount() > totalRefundValue, "TVL is less than TVR!");
-        FlightPolicy fp = FlightPolicy(flightnToPolicyContract[_policy.flightn]);
-        Policy memory p = fp.getPolicy();
 
         if(flightnToPolicyContract[_policy.flightn] == address(0)){
             FlightPolicy(flightnToPolicyContract[_policy.flightn]).addSubscriber(_subscriber);
@@ -90,7 +88,7 @@ contract Broker is ERC20 {
     }
 
     function _createPolicy(Policy memory _policy, address _subscriber) internal {
-        FlightPolicy newPolicy = new FlightPolicy(_policy, asset, _subscriber, address(this));
+        FlightPolicy newPolicy = new FlightPolicy(_policy, asset, address(this));
         flightnToPolicyContract[_policy.flightn] = address(newPolicy);
         newPolicy.addSubscriber(_subscriber);
     }

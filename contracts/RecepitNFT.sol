@@ -9,7 +9,9 @@ import "./Policy.sol";
 import "./Broker.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract RecepitNFT is ERC721, RecepitNFTInterface, Ownable {
+contract RecepitNFT is ERC721, Ownable {
+
+    event Refunded(string flightn, uint256 amount);
 
 
     Policy public policy;
