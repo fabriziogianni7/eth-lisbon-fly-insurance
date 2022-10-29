@@ -7,8 +7,9 @@
 const hre = require("hardhat");
 
 async function main() {
+  try {
   const USDC_ADDRESS = "0xDc9AE3AE3Ec8acA2768e1690DD20c76942552Fcf"
-
+console.log(process.env.PRIVATE_KEY)
   const Broker = await hre.ethers.getContractFactory("Broker");
   const broker = await Broker.deploy(USDC_ADDRESS, 'Broker', 'IBC');
 
@@ -17,6 +18,10 @@ async function main() {
   console.log(
      `Broker contract deployed on ${broker.address}`
   );
+    
+  } catch (error) {
+    console.log(error )
+  }
 }
 
 // We recommend this pattern to be able to use async/await everywhere
