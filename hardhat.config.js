@@ -1,17 +1,16 @@
-require("@nomicfoundation/hardhat-toolbox");
+require('@nomicfoundation/hardhat-toolbox')
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
   networks: {
     testnet: {
-      url: "https://evm-t3.cronos.org/",
+      url: 'https://evm-t3.cronos.org/',
       accounts: process.env.PRIVATE_KEY,
     },
   },
-  defaultNetwork: "testnet",
-  solidity: "0.8.4",
-};
-
+  defaultNetwork: 'testnet',
+  solidity: '0.8.4',
+}
 
 // const config: HardhatUserConfig = {
 //   solidity: "0.8.4",
