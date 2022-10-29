@@ -19,6 +19,7 @@ contract Broker is ERC20 {
 
 
     mapping(address => uint256) shareHolderToAmount;
+    mapping(string => address) flightnToPolicyContract;
 
     //the USDC or CRO contract - create vault
     constructor(ERC20 _asset, string memory _name, string memory _symbol )
@@ -28,16 +29,11 @@ contract Broker is ERC20 {
 
     // deposit function for LP (Liquidity Providers)
     function deposit(uint256 amount) public {
-        require (amount > 0, "Deposit less than Zero");
-
+        require (amount >= 0, "Deposit is 0");
         asset.transferFrom(msg.sender, address(this), amount);
-
         shareHolderToAmount[msg.sender] += amount;
-
         _mint(msg.sender, amount);
-
         emit Deposit(msg.sender, amount);
-
     }
 
     // returns total number of amount
@@ -48,12 +44,9 @@ contract Broker is ERC20 {
     // LP to return shares and get thier token back before they can withdraw, and requiers that the user has a deposit
     function redeem(uint256 shares, address receiver ) internal returns (uint256 amount) {
         require(shareHolderToAmount[msg.sender] > 0, "Not a share holder");
-
         shareHolderToAmount[msg.sender] -= shares;
-
         _burn(msg.sender, shares);
         amount = shares;
-
         emit Withdraw(msg.sender, receiver, amount);
         return amount;
     }
@@ -71,30 +64,33 @@ contract Broker is ERC20 {
         return value;
     }
 
-    // TODO should pay the refund to the subscriber
+    // TODO should pay the refund to the subscriber 
+    // the recepitNFT should be passed here
     function refundSubscriber(FlightPolicy _FlightPolicy) public {
-        // check that TVL > Tot Refound
         // _FlightPolicy.subscriberToPolicies
 
     }
 
-    function createPolicy(Policy memory policy) public {
-        //check if the policy is present
-        // if it is, add subscriber
-        // if it isn't create a new one
+    function managePolicies(Policy memory _policy, address _subscriber) public {
+        require(totalamount() > 0, "TVL is 0!");
+        require(totalamount() > totalRefundValue, "TVL is less than TVR!");
 
+        //check if the policy is present
+            // if it is, add subscriber
+            // if it isn't create a new one
+        if(flightnToPolicyContract[_policy.flightn] > 0){
+            FlightPolicy(flightnToPolicyContract[_policy.flightn]).addSubscriber(_subscriber);
+        }else{
+            //TODO create a new policy contract
+            _createPolicy(_policy,_subscriber);
+        }
+        // increment tot refund 
+        totalRefundValue +=  _policy.refund;
     }
 
-   
-    // function subscribeNewPolicy(address _subscriber, uint256 _ticketPrice, uint256 _premium, uint256 _expiryTimestamp, uint256 _refund) public {
-    //     require(totalamount() > totalRefundValue, "TVL is less that TVR!");
-
-    //     uint256 policyId = FlightPolicy.mint(_subscriber, _ticketPrice,  _refund, _expiryTimestamp);
-
-
-    //     asset.transferFrom(msg.sender, address(this), _premium);
-    //     emit Suscribe(msg.sender, _premium, policyId); 
-
-    // }
+    function _createPolicy(Policy memory _policy, address _subscriber) internal {
+        FlightPolicy newPolicy = new FlightPolicy(_policy, asset, _subscriber);
+        flightnToPolicyContract[_policy.flightn] = address(newPolicy);
+    }
 
 }

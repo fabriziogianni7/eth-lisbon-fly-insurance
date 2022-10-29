@@ -43,7 +43,7 @@ contract FlightPolicy is ERC721 , FlightPolicyInterface{
 
 
     // function mint(address _subscriber, uint256 _ticketPrice, uint256 _refund,uint256 _expiryTimestamp) public returns (uint256 _id) {
-    //     //todo callable on ly by broker contract
+    //     //TODO callable on ly by broker contract
     //     uint256 totSupply = totalSupply();
     //     uint256 dcmls = decimals();
     //     _id = totSupply++;
