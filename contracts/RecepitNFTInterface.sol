@@ -11,10 +11,8 @@ interface RecepitNFTInterface {
 
     event Refunded(string flightn, uint256 amount);
 
-    address public brokerAddress;
-    Policy public policy;
 
  
-    function claimRefund() public onlyOwner {}
+    function claimRefund() external;
 
 }

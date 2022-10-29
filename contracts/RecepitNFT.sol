@@ -4,10 +4,12 @@ pragma solidity ^0.8.0;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "./FlightPolicyInterface.sol";
+import "./RecepitNFTInterface.sol";
 import "./Policy.sol";
 import "./Broker.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract RecepitNFT is ERC721, RecepitNFTInterface {
+contract RecepitNFT is ERC721, RecepitNFTInterface, Ownable {
 
     event Refunded(string flightn, uint256 amount);
 
@@ -15,11 +17,11 @@ contract RecepitNFT is ERC721, RecepitNFTInterface {
     address public brokerAddress;
     address public subscriber;
 
-    constructor(Policy memory _policy, ERC20 _asset, address _subscriber, address _brokerAddress) ERC721("Policy Recepit NFT", "PRN") {
+    constructor(Policy memory _policy, ERC20 _asset, address _subscriber, address _brokerAddress, uint256 _id) ERC721("Policy Recepit NFT", "PRN") {
         policy = _policy;
         brokerAddress = _brokerAddress;
         subscriber = _subscriber;
-        _mint(_subscriber, _owners++);
+        _mint(_subscriber,_id);
     }
 
     function claimRefund() public onlyOwner {

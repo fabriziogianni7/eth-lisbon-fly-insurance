@@ -22,9 +22,9 @@ contract Broker is ERC20 {
     mapping(string => address) flightnToPolicyContract;
 
     //the USDC or CRO contract - create vault
-    constructor(ERC20 _asset, string memory _name, string memory _symbol )
+    constructor(address _asset, string memory _name, string memory _symbol )
      ERC20(_name, _symbol) {
-        asset = _asset;
+        asset = ERC20(_asset) ;
     }
 
     // deposit function for LP (Liquidity Providers)
@@ -87,6 +87,7 @@ contract Broker is ERC20 {
     function _createPolicy(Policy memory _policy, address _subscriber) internal {
         FlightPolicy newPolicy = new FlightPolicy(_policy, asset, _subscriber);
         flightnToPolicyContract[_policy.flightn] = address(newPolicy);
+        newPolicy.addSubscriber(_subscriber);
     }
 
 }

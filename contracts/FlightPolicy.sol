@@ -10,21 +10,25 @@ import "./RecepitNFTInterface.sol";
 
 contract FlightPolicy is ERC721 , FlightPolicyInterface{
 
-
+    event NewSubscriber(address);
+    
     Policy public policy;
     ERC20 public asset;
+    address public brokerAddress;
+    uint256 totalRecepits;
 
-    constructor(Policy memory _policy, ERC20 _asset, address _firstSubscriber) {
+    constructor(Policy memory _policy, ERC20 _asset, address _firstSubscriber, address _brokerAddress) {
         policy = _policy;
-        asset = _asset;
-        addSubscriber(_firstSubscriber);
+        asset = ERC20(_asset);
+        brokerAddress = _brokerAddress;
     }
 
-    function addSubscriber(address _subscriber) public  {
+    function addSubscriber(address _subscriber) external  {
         policy.subscribers.push(_subscriber);
         asset.transferFrom(msg.sender, address(this), policy.premium);
-        new RecepitNFT(policy, asset, _subscriber, _broker);
-        emit newSubscriber(_subscriber);
+        uint256 tokenId = totalRecepits++;
+        new RecepitNFT(policy, asset, _subscriber, brokerAddress, tokenId);
+        emit NewSubscriber(_subscriber);
     }
 
     function totalamount() public view returns(uint256) {
