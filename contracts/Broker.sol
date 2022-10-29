@@ -81,7 +81,6 @@ contract Broker is ERC20 {
         if(flightnToPolicyContract[_policy.flightn] > 0){
             FlightPolicy(flightnToPolicyContract[_policy.flightn]).addSubscriber(_subscriber);
         }else{
-            //TODO create a new policy contract
             _createPolicy(_policy,_subscriber);
         }
         // increment tot refund 
